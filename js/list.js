@@ -1,12 +1,37 @@
 import axios from 'axios';
 
+const getUser = async (userId) => { 
+  try {
+      
+      const response = await axios.get(`https://solar-energy-serv.onrender.com/luser`);
+      const user = response.data;
+      console.log(response.data);
+
+      // Запис даних користувача в змінні
+      const userEmail = user.email;
+      const userToken = user.token;
+
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("email", user.email);
+
+      console.log('Email:', userEmail);
+      console.log('Token:', userToken);
+  } catch (error) {
+      console.error('Error fetching user:', error);
+  }
+};
+
 console.log("axios conect");
+console.log("ddddd");
 
+
+console.log("def");
 console.log(localStorage.getItem("token"));
-
 console.log(localStorage.getItem("email"));
 
 //const axios = require('axios');
+
+
 
 const container = document.querySelector("#js-list-order");
 const getOrgersQuery =
@@ -14,7 +39,7 @@ const getOrgersQuery =
     ? "https://solar-energy-serv.onrender.com/order"
     : "https://solar-energy-serv.onrender.com/userOrders/" + localStorage.getItem("email");
 
-axios
+const getnawData = axios
   .get(getOrgersQuery)
   .then((response) => {
     try {
@@ -97,3 +122,7 @@ axios
   .catch((error) => {
     console.error("Сталася помилка під час виконання запиту:", error);
   });
+
+  
+getUser();
+getnawData();
